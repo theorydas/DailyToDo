@@ -97,21 +97,15 @@ struct TaskTodo: View {
     
     var body: some View {
         HStack{
-            Button(action: ButtonAction){
+            Button(action: {buttonState = buttonState == 0 ? 1 : 0} ){ // Swaps state between 0 and 1
                 Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
                     .foregroundColor(.accentColor)
-                    .opacity(buttonState == 0 ? 1 : 0.5)
+                    .opacity(buttonState == 0 ? 1 : 0.8)
             }.buttonStyle(PlainButtonStyle())
             Text(ElementText)
                 .opacity(buttonState == 0 ? 1 : 0.5)
+                .strikethrough(buttonState == 0 ? false : true)
         }
-    }
-    
-    func ButtonAction() {
-        buttonState = buttonState == 0 ? 1 : 0
-        // We chaange the Image of the button depending on the state "circle" for 0, and "checkmark.circle" for 1
-
-         
     }
 }
 
