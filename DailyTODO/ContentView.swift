@@ -65,17 +65,29 @@ struct DayListBanner: View {
 }
 
 struct TaskTodo: View {
-    var State: Double = 0
+    @State private var buttonState: Double = 0
     var ElementText: String
     
     var body: some View {
-        HStack {
-            Image(systemName: "circle")
-                .foregroundColor(.accentColor)
+        HStack{
+            Button(action: ButtonAction){
+                Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
+                    .foregroundColor(.accentColor)
+                    .opacity(buttonState == 0 ? 1 : 0.5)
+            }.buttonStyle(PlainButtonStyle())
             Text(ElementText)
+                .opacity(buttonState == 0 ? 1 : 0.5)
         }
     }
+    
+    func ButtonAction() {
+        buttonState = buttonState == 0 ? 1 : 0
+        // We chaange the Image of the button depending on the state "circle" for 0, and "checkmark.circle" for 1
+
+         
+    }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         DayListView(DaysInFuture: 0)
