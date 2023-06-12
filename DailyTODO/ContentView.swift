@@ -39,6 +39,12 @@ struct DayListBanner: View {
                 .shadow(color: .black, radius: .pi)
                 
                 Spacer()
+                NavigationControlView()
+            }
+            .padding(.horizontal)
+        }
+    }
+    
     func GetCurretDay(DaysInFuture: Int = 0) -> String {
         let DaysInFuture = Double (DaysInFuture * 60 * 60 * 24)
         let date = Date(timeIntervalSinceNow: DaysInFuture)
@@ -61,28 +67,27 @@ struct DayListBanner: View {
     }
 }
 
-                HStack{
-                    Button(action: {
-                        print("LEFT LOL")
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .imageScale(.large)
-                    }
-                    Button(action: {
-                        print("Now")
-                    }) {
-                        Text("Today")
-                    }
-                    Button(action: {
-                        print("Right LOL")
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .imageScale(.large)
-                    }
-                }.padding(.top, 50)
+struct NavigationControlView: View {
+    var body: some View {
+        HStack{
+            Button(action: {
+                print("LEFT LOL")
+            }) {
+                Image(systemName: "chevron.left")
+                    .imageScale(.large)
             }
-            .padding(.horizontal)
-        }
+            Button(action: {
+                print("Now")
+            }) {
+                Text("Today")
+            }
+            Button(action: {
+                print("Right LOL")
+            }) {
+                Image(systemName: "chevron.right")
+                    .imageScale(.large)
+            }
+        }.padding(.top, 50)
     }
 }
 
