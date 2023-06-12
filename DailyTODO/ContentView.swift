@@ -6,11 +6,11 @@ struct DayListView: View {
     var body: some View {
         VStack {
             DayListBanner(DaysInFuture: DaysInFuture)
-            Divider()
+            Divider().padding(.bottom, 5)
             VStack(alignment: .leading) {
                 TaskTodo(ElementText: "This is an amazing day. Please be happy! :)")
                 ForEach(0..<10) { i in
-                    TaskTodo(ElementText: "Generic TODO \(i+1)")
+                    TaskTodo(ElementText: "Generic task \(i+1)")
                 }
             }
             Spacer()
@@ -34,7 +34,6 @@ struct DayListBanner: View {
                         .padding(.top, 26)
                     
                     Text(GetCurrentDate(DaysInFuture: DaysInFuture))
-                    //                        .padding(.bottom, 10)
                 }
                 .shadow(color: .black, radius: .pi)
                 
