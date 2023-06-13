@@ -21,6 +21,8 @@ struct DayListView: View {
 }
 
 struct DayListBanner: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var DaysInFuture: Int
     
     var body: some View {
@@ -35,13 +37,17 @@ struct DayListBanner: View {
                     
                     Text(GetCurrentDate(DaysInFuture: DaysInFuture))
                 }
-                .shadow(color: .black, radius: .pi)
+                .shadow(color: shadowColor, radius: 5)
                 
                 Spacer()
                 NavigationControlView()
             }
             .padding(.horizontal)
         }
+    }
+    
+    var shadowColor: Color {
+        return colorScheme == .dark ? .black : .white
     }
     
     func GetCurretDay(DaysInFuture: Int = 0) -> String {
