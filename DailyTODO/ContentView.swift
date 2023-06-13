@@ -102,15 +102,18 @@ struct TaskTodo: View {
     
     var body: some View {
         HStack{
-            Button(action: {buttonState = buttonState == 0 ? 1 : 0} ){ // Swaps state between 0 and 1
-                Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
-                    .foregroundColor(.accentColor)
-                    .opacity(buttonState == 0 ? 1 : 0.8)
-            }.buttonStyle(PlainButtonStyle())
+            Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
+                .foregroundColor(.accentColor)
+                .opacity(buttonState == 0 ? 1 : 0.8)
             Text(ElementText)
                 .opacity(buttonState == 0 ? 1 : 0.5)
                 .strikethrough(buttonState == 0 ? false : true)
+                .lineLimit(1)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 10)
+        .onTapGesture {buttonState = buttonState == 0 ? 1 : 0}
+//        .on
     }
 }
 
@@ -119,4 +122,3 @@ struct ContentView_Previews: PreviewProvider {
         DayListView(DaysInFuture: 0)
     }
 }
-
