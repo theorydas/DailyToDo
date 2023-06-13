@@ -8,9 +8,9 @@ struct DayListView: View {
             DayListBanner(DaysInFuture: DaysInFuture)
             Divider().padding(.bottom, 5)
             VStack(alignment: .leading) {
-                TaskTodo(ElementText: "This is an amazing day. Please be happy! :)")
+                TaskTodo(elementText: "This is an amazing day. Please be happy! :)aaaaa")
                 ForEach(0..<10) { i in
-                    TaskTodo(ElementText: "Generic task \(i+1)")
+                    TaskTodo(elementText: "Generic task \(i+1)")
                 }
             }
             Spacer()
@@ -97,23 +97,39 @@ struct NavigationControlView: View {
 }
 
 struct TaskTodo: View {
+    @State var elementText: String = ""
+    
+    @State private var isHovered: Bool = false
+    @State private var inEditMode: Bool = false
     @State private var buttonState: Double = 0
-    var ElementText: String
     
     var body: some View {
         HStack{
             Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
                 .foregroundColor(.accentColor)
                 .opacity(buttonState == 0 ? 1 : 0.8)
-            Text(ElementText)
-                .opacity(buttonState == 0 ? 1 : 0.5)
-                .strikethrough(buttonState == 0 ? false : true)
-                .lineLimit(1)
+            if inEditMode {
+                TextField("...", text: $elementText, onCommit: {inEditMode = false})
+                    .opacity(buttonState == 0 ? 1 : 0.5)
+                    .strikethrough(buttonState == 0 ? false : true)
+                    .lineLimit(1)
+            } else {
+                Text(elementText)
+                    .opacity(buttonState == 0 ? 1 : 0.5)
+                    .strikethrough(buttonState == 0 ? false : true)
+                    .lineLimit(1)
+            }
+            Spacer()
+            Image(systemName: "square.and.pencil")
+                .padding(.trailing, 5)
+                .opacity(isHovered ? 1 : 0)
+                .onTapGesture {inEditMode = true}
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.leading, 10)
         .onTapGesture {buttonState = buttonState == 0 ? 1 : 0}
-//        .on
+//        .onHover(perform: {_hovered in isHovered = _hovered})
+        .onHover(perform: {_hovered in isHovered = _hovered})
     }
 }
 
