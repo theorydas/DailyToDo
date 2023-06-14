@@ -40,7 +40,6 @@ struct DayListBanner: View {
                 .shadow(color: shadowColor, radius: 5)
                 
                 Spacer()
-                NavigationControlView()
             }
             .padding(.horizontal)
         }
@@ -69,30 +68,6 @@ struct DayListBanner: View {
         let fullDate = dateFormatter.string(from: date)
 
         return fullDate
-    }
-}
-
-struct NavigationControlView: View {
-    var body: some View {
-        HStack{
-            Button(action: {
-                print("LEFT LOL")
-            }) {
-                Image(systemName: "chevron.left")
-                    .imageScale(.large)
-            }
-            Button(action: {
-                print("Now")
-            }) {
-                Text("Today")
-            }
-            Button(action: {
-                print("Right LOL")
-            }) {
-                Image(systemName: "chevron.right")
-                    .imageScale(.large)
-            }
-        }.padding(.top, 50)
     }
 }
 
