@@ -1,5 +1,22 @@
 import SwiftUI
 
+var dayInfo: [String: String] {
+    return [
+        "dayNumber": "dd",
+        "dayName": "EEEE",
+        "fullDate": "dd MMMM yyyy",
+    ]
+}
+
+func GetDayInfo(deltaDay: Int = 0, type: String) -> String {
+    let deltaDay = Double (deltaDay * 60 * 60 * 24) // Convert days to seconds
+    let date = Date(timeIntervalSinceNow: deltaDay)
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = dayInfo[type] ?? "dd MMMM yyyy" // Fallback to fullDate
+    return dateFormatter.string(from: date)
+}
+
 struct DayListView: View {
     var DaysInFuture: Int
     @State private var todoTasks = [String]()
@@ -7,6 +24,7 @@ struct DayListView: View {
     var body: some View {
         VStack {
             DayListBanner(DaysInFuture: DaysInFuture)
+            CalendarBubbles()
             List {
                 ForEach(todoTasks, id: \.self) { item in
                     TaskTodo(elementText: item)
@@ -19,10 +37,46 @@ struct DayListView: View {
                 Text("Add new task")
             }
             .buttonStyle(PlainButtonStyle())
-            .padding(.bottom, -10)
+            .padding(.bottom, -30)
         }
-        .frame(width: 300, height: 360)
+        .frame(width: 298, height: 380)
         .ignoresSafeArea()
+    }
+}
+
+struct CalendarBubbles: View {
+    var body: some View {
+        Divider()
+        .overlay {
+            HStack(spacing: 25) {
+                ForEach(-1..<5) { i in
+                    CalendarBubble(deltaDays: i)
+                }
+            }
+        }
+        .padding(.top, 40)
+        .padding(.bottom, 15)
+    }
+}
+
+struct CalendarBubble: View {
+    var deltaDays: Int
+    
+    var body: some View {
+        let dayInitial = GetDayInfo(deltaDay: deltaDays, type: "dayName").prefix(1)
+        let dayNumber = GetDayInfo(deltaDay: deltaDays, type: "dayNumber")
+        
+        VStack{
+            Text(dayInitial)
+            Circle()
+                .frame(width: 25, height: 25)
+                .overlay {
+                    Text(dayNumber)
+                        .foregroundColor(deltaDays==0 ? .white : .black)
+                }
+                .foregroundColor(deltaDays==0 ? .accentColor : .white)
+                .opacity(deltaDays==0 ? 1 : 0.75)
+        }.padding(.top, -28)
     }
 }
 
@@ -35,13 +89,13 @@ struct DayListBanner: View {
         VStack {
             HStack {
                 VStack {
-                    Text( GetCurretDay(DaysInFuture: DaysInFuture))
+                    Text( GetDayInfo(deltaDay: DaysInFuture, type: "dayName"))
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.accentColor)
                         .padding(.top, 26)
                     
-                    Text(GetCurrentDate(DaysInFuture: DaysInFuture))
+                    Text(GetDayInfo(deltaDay: DaysInFuture, type: "fullDate"))
                 }
                 .shadow(color: shadowColor, radius: 5)
                 
@@ -53,27 +107,6 @@ struct DayListBanner: View {
     
     var shadowColor: Color {
         return colorScheme == .dark ? .black : .white
-    }
-    
-    func GetCurretDay(DaysInFuture: Int = 0) -> String {
-        let DaysInFuture = Double (DaysInFuture * 60 * 60 * 24)
-        let date = Date(timeIntervalSinceNow: DaysInFuture)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let dayInWeek = dateFormatter.string(from: date)
-        
-        return dayInWeek
-    }
-
-    func GetCurrentDate(DaysInFuture: Int = 0) -> String {
-        // Returns the DD Month YYYY format of the current date
-        let DaysInFuture = Double (DaysInFuture * 60 * 60 * 24)
-        let date = Date(timeIntervalSinceNow: DaysInFuture)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        let fullDate = dateFormatter.string(from: date)
-
-        return fullDate
     }
 }
 
