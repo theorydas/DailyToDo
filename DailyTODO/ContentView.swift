@@ -2,18 +2,24 @@ import SwiftUI
 
 struct DayListView: View {
     var DaysInFuture: Int
+    @State private var todoTasks = [String]()
     
     var body: some View {
         VStack {
             DayListBanner(DaysInFuture: DaysInFuture)
-            Divider().padding(.bottom, 5)
-            VStack(alignment: .leading) {
-                TaskTodo(elementText: "This is an amazing day. Please be happy! :)aaaaa")
-                ForEach(0..<10) { i in
-                    TaskTodo(elementText: "Generic task \(i+1)")
+            List {
+                ForEach(todoTasks, id: \.self) { item in
+                    TaskTodo(elementText: item)
                 }
             }
             Spacer()
+            Button(action: {
+                todoTasks.append("New Task (\(todoTasks.count))")
+            }) {
+                Text("Add new task")
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding(.bottom, -10)
         }
         .frame(width: 300, height: 360)
         .ignoresSafeArea()
@@ -79,32 +85,34 @@ struct TaskTodo: View {
     @State private var buttonState: Double = 0
     
     var body: some View {
-        HStack{
-            Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
-                .foregroundColor(.accentColor)
-                .opacity(buttonState == 0 ? 1 : 0.8)
-            if inEditMode {
-                TextField("...", text: $elementText, onCommit: {inEditMode = false})
-                    .opacity(buttonState == 0 ? 1 : 0.5)
-                    .strikethrough(buttonState == 0 ? false : true)
-                    .lineLimit(1)
-            } else {
-                Text(elementText)
-                    .opacity(buttonState == 0 ? 1 : 0.5)
-                    .strikethrough(buttonState == 0 ? false : true)
-                    .lineLimit(1)
+        ZStack {
+            HStack{
+                Image(systemName: buttonState == 0 ? "circle" : "circle.fill")
+                    .foregroundColor(.accentColor)
+                    .opacity(buttonState == 0 ? 1 : 0.8)
+                    .onTapGesture {buttonState = buttonState == 0 ? 1 : 0}
+                if inEditMode {
+                    TextField("...", text: $elementText, onCommit: {inEditMode = false})
+                        .opacity(buttonState == 0 ? 1 : 0.5)
+                        .strikethrough(buttonState == 0 ? false : true)
+                        .lineLimit(1)
+                } else {
+                    Text(elementText)
+                        .opacity(buttonState == 0 ? 1 : 0.5)
+                        .strikethrough(buttonState == 0 ? false : true)
+                        .lineLimit(1)
+                }
+                Spacer()
+                Image(systemName: "square.and.pencil")
+                    .padding(.trailing, 5)
+                    .opacity(isHovered ? 1 : 0)
+                    .onTapGesture {inEditMode = true}
             }
-            Spacer()
-            Image(systemName: "square.and.pencil")
-                .padding(.trailing, 5)
-                .opacity(isHovered ? 1 : 0)
-                .onTapGesture {inEditMode = true}
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 10)
+            .onHover(perform: {_hovered in isHovered = _hovered})
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 10)
-        .onTapGesture {buttonState = buttonState == 0 ? 1 : 0}
-//        .onHover(perform: {_hovered in isHovered = _hovered})
-        .onHover(perform: {_hovered in isHovered = _hovered})
+        .onTapGesture(count: 2) {inEditMode = true}
     }
 }
 
