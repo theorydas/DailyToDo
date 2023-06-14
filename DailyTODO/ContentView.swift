@@ -136,10 +136,10 @@ struct TaskTodo: View {
                         .lineLimit(1)
                 }
                 Spacer()
-                Image(systemName: "square.and.pencil")
+                Image(systemName: "delete.left")
                     .padding(.trailing, 5)
                     .opacity(isHovered ? 1 : 0)
-                    .onTapGesture {inEditMode = true}
+                    .onTapGesture {print("Delete item")}
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 10)
