@@ -28,14 +28,16 @@ struct TaskTodoView: View {
                         .lineLimit(1)
                 }
                 Spacer()
-                Image(systemName: "trash")
-                    .padding(.trailing, 5)
-                    .opacity(isHovered ? 1 : 0)
-                    .onTapGesture {tasksInDay.removeTask(task)}
-                    .foregroundColor(.red)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 10)
+            .swipeActions(allowsFullSwipe: false) {
+                Button(role: .destructive) {
+                    tasksInDay.removeTask(task)
+                } label: {
+                    Label("Delete", systemImage: "trash.fill")
+                }
+            }
         }
         .onHover(perform: {_hovered in isHovered = _hovered})
         .onTapGesture(count: 2) {inEditMode = true}
