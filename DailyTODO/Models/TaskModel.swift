@@ -1,26 +1,38 @@
 import SwiftUI
 
 class TaskModel: ObservableObject {
-    @Published var tasks: [Task] = []
+    @Published var tasks: [Task] = [Task()]
     
-    func addTask(taskText: String) {
-        tasks.append(Task(text: taskText))
+    func addTask(_ taskText: String = "") {
+        // Before adding the task, check if there are any with empty texts and remove them.
+        tasks.removeAll(where: { $0.text.isEmpty })
+        
+        tasks.append(Task(taskText))
     }
 
     func removeTask(_ task: Task) {
+        guard !task.text.isEmpty else {return}
+        
         tasks.removeAll(where: { $0 == task })
     }
 }
 
 class Task: Hashable, ObservableObject {
     var id: UUID
-    var text: String
+    @Published var text: String
     @Published var state: Double
     
-    init(text: String, state: Double = 0) {
+    init(_ text: String = "", state: Double = 0) {
         self.id = UUID()
         self.text = text
         self.state = state
+    }
+    
+    func toggleState() {
+        guard !text.isEmpty else {return}
+        
+        if state != 1 {state = 1} // You prefer completing instead of clearing your progress.
+        else {state = 0}
     }
 }
 
