@@ -1,20 +1,28 @@
 import Foundation
 
-struct DayModel {
-    var dayInfo: [String: String] {
-        return [
-            "dayNumber": "dd",
-            "dayName": "EEEE",
-            "fullDate": "dd MMMM yyyy",
-        ]
-    }
-
-    func getDayInfo(deltaDay: Int = 0, type: String) -> String {
-        let deltaDay = Double(deltaDay * 60 * 60 * 24) // Convert days to seconds
-        let date = Date(timeIntervalSinceNow: deltaDay)
-
+extension DateFormatter {
+    static func string(from date: Date, format: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dayInfo[type] ?? "dd MMMM yyyy" // Fallback to fullDate
+        dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
+    }
+}
+
+class Day {
+    var date: Date
+    
+    var dayNumber: String { DateFormatter.string(from: date, format: "dd") }
+    var monthNumber: String { DateFormatter.string(from: date, format: "MM") }
+    var yearNumber: String { DateFormatter.string(from: date, format: "yyyy") }
+    var dayName: String { DateFormatter.string(from: date, format: "EEEE") }
+    var monthName: String { DateFormatter.string(from: date, format: "MMMM") }
+    var fullName: String { DateFormatter.string(from: date, format: "dd MMMM yyyy") }
+    
+    init(date: Date = Date()) {
+        self.date = date
+    }
+    
+    static func == (lhs: Day, rhs: Day) -> Bool {
+        return lhs.fullName == rhs.fullName
     }
 }

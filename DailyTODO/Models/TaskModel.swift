@@ -1,5 +1,3 @@
-// Keep track of the tasks in a day. It allows to add and remove tasks.
-
 import SwiftUI
 
 class TaskModel: ObservableObject {

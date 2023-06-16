@@ -1,13 +1,12 @@
 import SwiftUI
 
 struct DayListView: View {
-    var daysInFuture: Int
-    
     @StateObject var tasksInDay = TaskModel()
-
+    @State var day: Day = Day()
+    
     var body: some View {
         VStack {
-            DayListBanner(DaysInFuture: daysInFuture)
+            DayListBanner(day: day)
             CalendarBubbles()
             List {
                 // tasksInDay.tasks have a name which can be repeated, ForEach should be given a unique id despite that.

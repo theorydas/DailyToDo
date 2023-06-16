@@ -6,7 +6,10 @@ struct CalendarBubbles: View {
         .overlay {
             HStack(spacing: 25) {
                 ForEach(-1..<5) { i in
-                    CalendarBubble(deltaDays: i)
+                    let deltaDay = Double(i * 60 * 60 * 24) // Convert days to seconds
+                    let date = Date(timeIntervalSinceNow: deltaDay)
+                    
+                    CalendarBubble(day: Day(date: date))
                 }
             }
         }
@@ -17,23 +20,22 @@ struct CalendarBubbles: View {
 
 
 struct CalendarBubble: View {
-    var deltaDays: Int
-    var dayModel = DayModel()
+    var day: Day
     
     var body: some View {
-        let dayInitial = dayModel.getDayInfo(deltaDay: deltaDays, type: "dayName").prefix(1)
-        let dayNumber = dayModel.getDayInfo(deltaDay: deltaDays, type: "dayNumber")
-
+        let dayInitial = day.dayName.prefix(1)
+        let dayNumber = day.dayNumber
+        
         VStack{
             Text(dayInitial)
             Circle()
                 .frame(width: 25, height: 25)
                 .overlay {
                     Text(dayNumber)
-                        .foregroundColor(deltaDays==0 ? .white : .black)
+                        .foregroundColor(day==Day() ? .white : .black)
                 }
-                .foregroundColor(deltaDays==0 ? .accentColor : .white)
-                .opacity(deltaDays==0 ? 1 : 0.75)
+                .foregroundColor(day==Day() ? .accentColor : .white)
+                .opacity(day==Day() ? 1 : 0.75)
         }.padding(.top, -28)
     }
 }
