@@ -14,17 +14,10 @@ struct TaskTodoView: View {
                     .foregroundColor(.accentColor)
                     .opacity(task.state == 0 ? 1 : 0.8)
                     .onTapGesture {task.state = task.state == 0.0 ? 1 : 0}
-                if inEditMode {
-                    TextField("...", text: $task.text, onCommit: {inEditMode = false})
+                TextField("...", text: $task.text, onCommit: deleteEmptyTask)
                         .opacity(task.state == 0 ? 1 : 0.5)
                         .strikethrough(task.state == 0 ? false : true)
                         .lineLimit(1)
-                } else {
-                    Text(task.text)
-                        .opacity(task.state == 0 ? 1 : 0.5)
-                        .strikethrough(task.state == 0 ? false : true)
-                        .lineLimit(1)
-                }
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,7 +30,12 @@ struct TaskTodoView: View {
                 }
             }
         }
-        .onHover(perform: {_hovered in isHovered = _hovered})
-        .onTapGesture(count: 2) {inEditMode = true}
+//        .onHover(perform: {_hovered in isHovered = _hovered})
+    }
+    
+    func deleteEmptyTask() {
+        if task.text == "" {
+            tasksInDay.removeTask(task)
+        }
     }
 }
