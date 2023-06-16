@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DayListBanner: View {
+struct DayBannerView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var day: Day

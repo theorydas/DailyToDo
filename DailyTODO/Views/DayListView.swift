@@ -6,12 +6,12 @@ struct DayListView: View {
     
     var body: some View {
         VStack {
-            DayListBanner(day: day)
+            DayBannerView(day: day)
             CalendarBubbles()
             TaskListView(tasksInDay: tasksInDay)
         }
-        .frame(width: 298, height: 380)
-        .ignoresSafeArea()
+        .frame(width: 298).frame(minHeight: 300)
+        .ignoresSafeArea() //TODO: What if I have other padding instead and not this???
     }
 }
 
@@ -25,13 +25,5 @@ struct TaskListView: View {
                 TaskTodoView(task: taskObject, tasksInDay: tasksInDay)
             }
         }
-        Spacer()
-        Button(action: {
-            tasksInDay.addTask(taskText: "New Task (\(tasksInDay.tasks.count))")
-        }) {
-            Text("Add new task")
-        }
-        .buttonStyle(PlainButtonStyle())
-        .padding(.bottom, -30)
     }
 }
