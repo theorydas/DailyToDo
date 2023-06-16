@@ -14,7 +14,7 @@ class TaskModel: ObservableObject {
 
 class Task: Hashable {
     var id: UUID
-    @State var text: String
+    var text: String
     var state: Double
     
     init(text: String, state: Double = 0) {
