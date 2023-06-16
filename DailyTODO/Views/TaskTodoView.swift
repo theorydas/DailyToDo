@@ -39,11 +39,3 @@ struct TaskTodoView: View {
         .onTapGesture(count: 2) {inEditMode = true}
     }
 }
-
-//struct TaskTodoView_Previews: PreviewProvider {
-//    @StateObject var tasksInDay = TaskModel()
-//
-//    static var previews: some View {
-//        TaskTodo(elementText: "Generetic Task", tasksInDay: tasksInDay)
-//    }
-//}
