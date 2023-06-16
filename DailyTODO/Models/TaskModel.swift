@@ -12,10 +12,10 @@ class TaskModel: ObservableObject {
     }
 }
 
-class Task: Hashable {
+class Task: Hashable, ObservableObject {
     var id: UUID
     var text: String
-    var state: Double
+    @Published var state: Double
     
     init(text: String, state: Double = 0) {
         self.id = UUID()
