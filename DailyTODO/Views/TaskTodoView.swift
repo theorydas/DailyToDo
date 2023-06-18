@@ -38,6 +38,9 @@ struct TaskTodoView: View {
                 Label("Delete", systemImage: "trash.fill")
             }
         }
+        .overlay{
+            Divider().padding(.top, 24)
+        }
     }
 
     func determineOpacity() -> Double {
