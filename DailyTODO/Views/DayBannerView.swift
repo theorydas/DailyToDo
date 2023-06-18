@@ -10,7 +10,7 @@ struct DayBannerView: View {
             HStack {
                 VStack {
                     Text( day.dayName)
-                        .font(.largeTitle)
+                        .font(.system(size: 36))
                         .bold()
                         .foregroundColor(.accentColor)
                         .padding(.top, 26)

@@ -30,12 +30,12 @@ struct CalendarBubble: View {
             Text(dayInitial)
             Circle()
                 .frame(width: 25, height: 25)
+                .foregroundColor(day==Day() ? .accentColor : .white)
+                .opacity(day==Day() ? 1 : 0.1)
                 .overlay {
                     Text(dayNumber)
-                        .foregroundColor(day==Day() ? .white : .black)
+                        .foregroundColor(day==Day() ? .white : .white)
                 }
-                .foregroundColor(day==Day() ? .accentColor : .white)
-                .opacity(day==Day() ? 1 : 0.75)
         }.padding(.top, -28)
     }
 }
