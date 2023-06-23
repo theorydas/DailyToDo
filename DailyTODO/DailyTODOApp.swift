@@ -4,7 +4,7 @@ import SwiftUI
 struct WindowTestApp: App {
     var body: some Scene {
         WindowGroup {
-            DayListView()
+            DayListView(taskDatabase: readTasks())
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
