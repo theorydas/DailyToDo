@@ -1,10 +1,12 @@
 import SwiftUI
+import AudioToolbox
 
 struct TaskTodoView: View {
     @FocusState private var isTextFieldFocused: Bool
     @StateObject var task: Task
     var tasksInDay: TaskModel
-    @State var isHovered: Bool = false
+    @State var opacity: Double = 1
+    @State var offset: CGFloat = 0
     
     var body: some View {
         HStack{
@@ -33,10 +35,20 @@ struct TaskTodoView: View {
                     .padding(.leading, 8)
             }
             Spacer()
-            ZStack{
+            // If the task is not empty, we show the trash icon.
+            if !task.text.isEmpty {
                 Image(systemName: "trash")
-                    .onTapGesture { tasksInDay.removeTask(task) }
-                    .opacity(isHovered ? 0.7 : 0)
+                    .onTapGesture {
+                        AudioServicesPlaySystemSound(0xf)
+                        
+                        // Animate the task to move to the left and fade out.
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            offset = -100
+                            opacity = 0
+                            tasksInDay.removeTask(task)
+                        }
+                    }
+                    .opacity(0.7)
                     .foregroundColor(.red)
             }
         }
