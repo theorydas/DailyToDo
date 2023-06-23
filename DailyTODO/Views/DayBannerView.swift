@@ -3,7 +3,7 @@ import SwiftUI
 struct DayBannerView: View {
     @Environment(\.colorScheme) var colorScheme
 
-    var day: Day
+    @StateObject var day: Day
     
     var body: some View {
         VStack {

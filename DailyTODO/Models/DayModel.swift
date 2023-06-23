@@ -8,8 +8,8 @@ extension DateFormatter {
     }
 }
 
-class Day {
-    var date: Date
+class Day: ObservableObject {
+    @Published var date: Date
     
     var dayNumber: String { DateFormatter.string(from: date, format: "dd") }
     var monthNumber: String { DateFormatter.string(from: date, format: "MM") }
