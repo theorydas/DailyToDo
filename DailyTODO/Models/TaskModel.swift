@@ -132,5 +132,22 @@ func readTasks() -> TaskDatabase {
         Task("Go to the gym :)")
     ])
     
-    return TaskDatabase(tasks: myTaskForTheDay)
+    if let taskDatabase = UserDefaults.standard.object(forKey: "databases") as? Data {
+        let decoder = JSONDecoder()
+        
+        if let taskDatabase = try? decoder.decode(TaskDatabase.self, from: taskDatabase) {
+            return taskDatabase
+        }
+    }
+    
+    let defaultTasks = TaskModel([Task("Something went wrong")])
+    return TaskDatabase(tasks: defaultTasks)
+}
+
+func saveTasks(_ taskDatabase: TaskDatabase) {
+    let encoder = JSONEncoder()
+
+    if let encoded = try? encoder.encode(taskDatabase) {
+        UserDefaults.standard.set(encoded, forKey: "databases")
+    }
 }
