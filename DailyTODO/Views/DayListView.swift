@@ -12,6 +12,9 @@ struct DayListView: View {
         }
         .frame(width: 298).frame(minHeight: 300)
         .ignoresSafeArea() //TODO: What if I have other padding instead and not this???
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification), perform: { output in
+            saveTasks(taskDatabase)
+        })
     }
 }
 

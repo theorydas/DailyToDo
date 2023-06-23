@@ -58,7 +58,8 @@ struct TaskTodoView: View {
         .overlay{
             Divider().padding(.top, 24).padding(.trailing, 75).padding(.leading, 10)
         }
-        .onHover {hovering in isHovered = hovering}
+        .opacity(opacity)
+        .offset(x: offset)
     }
 
     func determineOpacity() -> Double {
