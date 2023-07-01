@@ -4,7 +4,7 @@ import SwiftUI
 struct WindowTestApp: App {
     var body: some Scene {
         WindowGroup {
-            DayListView()
+            DayListView(taskDatabase: readTasks())
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
@@ -13,6 +13,15 @@ struct WindowTestApp: App {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DayListView()
+        let myTaskForTheDay = TaskModel([
+            Task("Wake up this morning"),
+            Task("Eat breakfast"),
+            Task("Spin(or)"),
+            Task("Go to the gym :)")
+        ])
+        
+        let test_tasks = TaskDatabase(tasks: myTaskForTheDay)
+        
+        DayListView(taskDatabase: test_tasks)
     }
 }

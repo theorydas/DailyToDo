@@ -3,14 +3,14 @@ import SwiftUI
 struct DayBannerView: View {
     @Environment(\.colorScheme) var colorScheme
 
-    var day: Day
+    @StateObject var day: Day
     
     var body: some View {
         VStack {
             HStack {
                 VStack {
                     Text( day.dayName)
-                        .font(.largeTitle)
+                        .font(.system(size: 36))
                         .bold()
                         .foregroundColor(.accentColor)
                         .padding(.top, 26)
