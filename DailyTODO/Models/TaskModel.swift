@@ -125,13 +125,6 @@ class Task: Hashable, ObservableObject, Codable {
 
 func readTasks() -> TaskDatabase {
     
-    let myTaskForTheDay = TaskModel([
-        Task("Wake up this morning"),
-        Task("Eat breakfast"),
-        Task("Spin(or) georg"),
-        Task("Go to the gym :)")
-    ])
-    
     if let taskDatabase = UserDefaults.standard.object(forKey: "databases") as? Data {
         let decoder = JSONDecoder()
         
