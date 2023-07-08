@@ -7,6 +7,7 @@ struct TaskTodoView: View {
     var tasksInDay: TaskModel
     @State var opacity: Double = 1
     @State var offset: CGFloat = 0
+    @State var isHovered: Bool = false
     
     var body: some View {
         HStack{
@@ -36,7 +37,7 @@ struct TaskTodoView: View {
             }
             Spacer()
             // If the task is not empty, we show the trash icon.
-            if !task.text.isEmpty {
+            if !task.text.isEmpty && isHovered {
                 Image(systemName: "trash")
                     .onTapGesture {
                         AudioServicesPlaySystemSound(0xf)
@@ -60,6 +61,9 @@ struct TaskTodoView: View {
         }
         .opacity(opacity)
         .offset(x: offset)
+        .onHover { state in
+            isHovered = state
+        }
     }
 
     func determineOpacity() -> Double {
