@@ -56,8 +56,8 @@ struct CalendarBubble: View {
                         .stroke(canShowHoverCircle ? Color("AntiSystem") : .clear, lineWidth: 2)
                         .opacity(0.6)
                 }
-                .onTapGesture { taskListDay.date = bubbleDay.date }
-                .onHover { _hovered in isHovered = _hovered}
         }.padding(.top, -28)
+        .onHover { _hovered in isHovered = _hovered}
+        .onTapGesture { taskListDay.date = bubbleDay.date }
     }
 }
