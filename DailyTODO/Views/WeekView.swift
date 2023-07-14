@@ -13,7 +13,7 @@ struct WeekView: View {
                 CalendarBubble(bubbleDay: bubbleDay, taskListDay: taskListDay)
             }
         }
-        .padding(.top, 40)
+        .padding(.top, 60)
         .padding(.bottom, 15)
     }
 }

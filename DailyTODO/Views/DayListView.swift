@@ -6,12 +6,12 @@ struct DayListView: View {
     
     var body: some View {
         VStack {
-            DayBannerView(day: day)
             WeekView(taskListDay: day)
+            DayBannerView(day: day)
             TaskListView(taskDatabase: taskDatabase, day: day)
         }
         .frame(width: 298).frame(minHeight: 300)
-        .ignoresSafeArea() //TODO: What if I have other padding instead and not this???
+        .ignoresSafeArea()
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification), perform: { output in
             saveTasks(taskDatabase)
         })
