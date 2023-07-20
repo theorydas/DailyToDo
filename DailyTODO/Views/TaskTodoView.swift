@@ -17,7 +17,7 @@ struct TaskTodoView: View {
                 .onTapGesture {
                     task.toggleState()
                     // If this was the last task and it was completed, we add a new task.
-                    if task.isComplete() && tasksInDay.tasks.last?.id == task.id {
+                    if task.isComplete() && tasksInDay.lastTask().id == task.id {
                         tasksInDay.addTask()
                     }
                 }

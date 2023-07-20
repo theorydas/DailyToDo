@@ -59,6 +59,10 @@ class TaskModel: ObservableObject, Codable {
         tasks.removeAll(where: { $0 == task })
     }
     
+    func lastTask() -> Task {
+        return tasks.last!
+    }
+    
     private enum CodingKeys : String, CodingKey {
         case tasks
     }
