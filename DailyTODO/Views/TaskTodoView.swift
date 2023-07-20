@@ -14,7 +14,13 @@ struct TaskTodoView: View {
             Image(systemName: task.state == 0 ? "circle" : "largecircle.fill.circle")
                 .foregroundColor(.accentColor)
                 .opacity(determineOpacity())
-                .onTapGesture {task.toggleState()}
+                .onTapGesture {
+                    task.toggleState()
+                    // If this was the last task and it was completed, we add a new task.
+                    if task.state == 1 && tasksInDay.tasks.last?.id == task.id {
+                        tasksInDay.addTask()
+                    }
+                }
             
             if task.state != 1 { // We separete the two views here, because TextField does not support strikethrough.
                 TextField("...", text: $task.text)
