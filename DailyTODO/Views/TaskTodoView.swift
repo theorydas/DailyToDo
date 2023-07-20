@@ -11,18 +11,18 @@ struct TaskTodoView: View {
     
     var body: some View {
         HStack{
-            Image(systemName: task.state == 0 ? "circle" : "largecircle.fill.circle")
+            Image(systemName: task.isComplete() ? "largecircle.fill.circle" : "circle")
                 .foregroundColor(.accentColor)
                 .opacity(determineOpacity())
                 .onTapGesture {
                     task.toggleState()
                     // If this was the last task and it was completed, we add a new task.
-                    if task.state == 1 && tasksInDay.tasks.last?.id == task.id {
+                    if task.isComplete() && tasksInDay.tasks.last?.id == task.id {
                         tasksInDay.addTask()
                     }
                 }
             
-            if task.state != 1 { // We separete the two views here, because TextField does not support strikethrough.
+            if !task.isComplete() { // We separete the two views here, because TextField does not support strikethrough.
                 TextField("...", text: $task.text)
                     .font(.system(size: 14))
                     .lineLimit(1)
@@ -75,6 +75,6 @@ struct TaskTodoView: View {
     func determineOpacity() -> Double {
         guard !task.text.isEmpty else { return 0.4 }
 
-        return task.state == 0 ? 1 : 0.8
+        return task.isComplete() ? 0.8 : 1
     }
 }

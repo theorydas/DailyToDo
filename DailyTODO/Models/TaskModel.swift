@@ -93,6 +93,12 @@ class Task: Hashable, ObservableObject, Codable {
         else {state = 0}
     }
     
+    func isComplete() -> Bool {
+        return state == 1
+    }
+
+    // - marks
+    
     static func == (lhs: Task, rhs: Task) -> Bool {
         return lhs.id == rhs.id
     }
