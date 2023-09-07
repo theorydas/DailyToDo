@@ -1,8 +1,11 @@
 # DailyTODO for MacOS
 
+![Logo](Images/TodoBanner.png)
 ## Description
 
 The DailyTODO App is a user-friendly application designed specifically for Apple users to help manage and organize their daily tasks and projects. Whether you're a student, professional, or anyone with a busy schedule, this app is here to minimally simplify your life and keep you on top of your game.
+
+![Compact View](Images/Compact.png)
 
 ## Features
 
