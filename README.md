@@ -1,4 +1,4 @@
-# DailyTODO for MacOS
+# DailyTODO for MacOS (Under progress)
 
 ![Logo](Images/TodoBanner.png)
 ## Description
